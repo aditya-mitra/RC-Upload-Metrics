@@ -1,0 +1,15 @@
+{
+    "id": "90b2d3e6-8446-45c3-86af-2dbe2843881e",
+    "version": "1.0.1",
+    "requiredApiVersion": "^1.4.0",
+    "iconFile": "public/icon.png",
+    "author": {
+        "name": "aditya-mitra",
+        "homepage": "https://github.com/aditya-mitra/RC-Upload-Metrics",
+        "support": "https://github.com/aditya-mitra/RC-Upload-Metrics/issues"
+    },
+    "name": "Upload-Metrics",
+    "nameSlug": "upload-metrics",
+    "classFile": "UploadMetricsApp.ts",
+    "description": "Rocket.Chat App to get the metrics (using a provider) for Attachments"
+}
