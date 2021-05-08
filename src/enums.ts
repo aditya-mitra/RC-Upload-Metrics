@@ -1,5 +1,9 @@
-export enum MediaUrlType { // eslint-disable-line import/prefer-default-export
-    image = 'image',
-    video = 'video',
-    audio = 'audio',
-  }
+export enum MediaUrlType {
+  image = 'image',
+  video = 'video',
+  audio = 'audio',
+}
+
+export enum shortenBlockMessage {
+  stats = 'get_stats',
+}
