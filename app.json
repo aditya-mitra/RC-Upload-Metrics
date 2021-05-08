@@ -14,10 +14,5 @@
     "description": "Rocket.Chat App to get the metrics (using a provider) for Attachments",
     "implements": [
         "IPostMessageSent"
-    ],
-    "permissions": [
-        {
-            "name": "message.write"
-        }
     ]
 }

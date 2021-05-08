@@ -6,7 +6,7 @@ import {
 } from "@rocket.chat/apps-engine/definition/accessors";
 import { IMessage } from "@rocket.chat/apps-engine/definition/messages";
 import { IShortenResult } from "./definitions/shorten";
-import getAttachmentUrls from "./lib/getMedia";
+import getAttachmentUrls from "./lib/getAttachment";
 import sendMessage from "./lib/sendMessage";
 import getYourlsUrls from "./lib/yourls/shorten";
 
@@ -30,24 +30,19 @@ export default async function postMessageSent(
   _persist: IPersistence,
   modify: IModify
 ): Promise<void> {
-  // const mediaUrls = await getAttachmentUrls(
-  //   message,
-  //   read.getEnvironmentReader().getEnvironmentVariables()
-  // );
+  const mediaUrls = await getAttachmentUrls(
+    message,
+    read.getEnvironmentReader().getEnvironmentVariables()
+  );
 
-  // const shortenedResults = await getYourlsUrls(http, mediaUrls);
-
-  const shorts: IShortenResult[] = [
-    { message: "checking", shortenedUrl: "adfas", name: "4312" },
-  ];
+  const shortenedResults = await getYourlsUrls(http, mediaUrls);
 
   await Promise.all(
-    shorts.map((result) =>
+    shortenedResults.map((result) =>
       sendMessage({
         creator: modify.getCreator(),
         room: message.room,
         msg: createMessage(result),
-        sender: message.sender,
       })
     )
   ).catch((e) => {
