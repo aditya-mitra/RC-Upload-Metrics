@@ -20,6 +20,6 @@ export default class UploadMetricsApp extends App implements IPostMessageSent {
     persist: IPersistence,
     modify: IModify,
   ): Promise<void> {
-    postMessageSent(message, read, http, persist, modify);
+    await postMessageSent(message, read, http, persist, modify);
   }
 }

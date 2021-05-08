@@ -6,6 +6,7 @@ import {
 } from "@rocket.chat/apps-engine/definition/accessors";
 import { IMessage } from "@rocket.chat/apps-engine/definition/messages";
 import getMediaUrls from "./lib/getMedia";
+import getYourlsUrls from "./lib/yourls/shorten";
 
 export default async function postMessageSent(
   message: IMessage,
@@ -18,5 +19,5 @@ export default async function postMessageSent(
     message,
     read.getEnvironmentReader().getEnvironmentVariables()
   );
-  console.log(mediaUrls);
+  await getYourlsUrls(http, mediaUrls);
 }
