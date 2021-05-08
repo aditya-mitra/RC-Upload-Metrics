@@ -1,6 +1,5 @@
-import { IModifyCreator } from "@rocket.chat/apps-engine/definition/accessors";
-import { IRoom } from "@rocket.chat/apps-engine/definition/rooms";
-import { IUser } from "@rocket.chat/apps-engine/definition/users";
+import { IModifyCreator } from '@rocket.chat/apps-engine/definition/accessors';
+import { IRoom } from '@rocket.chat/apps-engine/definition/rooms';
 
 interface ISendMessage {
   creator: IModifyCreator;

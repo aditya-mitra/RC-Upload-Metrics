@@ -1,7 +1,7 @@
-import { IEnvironmentalVariableRead } from "@rocket.chat/apps-engine/definition/accessors";
-import { IMessage } from "@rocket.chat/apps-engine/definition/messages";
+import { IEnvironmentalVariableRead } from '@rocket.chat/apps-engine/definition/accessors';
+import { IMessage } from '@rocket.chat/apps-engine/definition/messages';
 
-import { IMediaUrl } from "../definitions/attachment";
+import { IMediaUrl } from '../definitions/attachment';
 
 const regex = /!\s?(?:mv|make-?visible)/i;
 
@@ -10,13 +10,13 @@ const regex = /!\s?(?:mv|make-?visible)/i;
  */
 export default async function getAttachmentUrls(
   message: IMessage,
-  envVars: IEnvironmentalVariableRead
+  envVars: IEnvironmentalVariableRead,
 ): Promise<IMediaUrl[]> {
   if (!message.attachments?.length) {
     return [];
   }
 
-  const envRootUrl = await envVars.getValueByName("ROOT_URL");
+  const envRootUrl = await envVars.getValueByName('ROOT_URL');
   const rootUrl = envRootUrl.slice(0, envRootUrl.length - 1); // remove the ending slash
 
   const mediaUrls: IMediaUrl[] = [];
@@ -24,22 +24,22 @@ export default async function getAttachmentUrls(
 
   message.attachments.forEach((attachment) => {
     if (!!attachment.description?.match(regex)?.length || mainTextVisible) {
-      const command = attachment.description || message.text || "";
+      const command = attachment.description || message.text || '';
       if (attachment.imageUrl) {
         mediaUrls.push({
-          type: "image",
+          type: 'image',
           url: rootUrl + attachment.imageUrl,
           command,
         });
       } else if (attachment.audioUrl) {
         mediaUrls.push({
-          type: "audio",
+          type: 'audio',
           url: rootUrl + attachment.audioUrl,
           command,
         });
       } else if (attachment.videoUrl) {
         mediaUrls.push({
-          type: "video",
+          type: 'video',
           url: rootUrl + attachment.videoUrl,
           command,
         });
