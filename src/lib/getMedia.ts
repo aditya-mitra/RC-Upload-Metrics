@@ -8,7 +8,7 @@ const regex = /!\s?(?:mv|make-?visible)/i;
 /** get the multimedia urls from a message
  * can be _image_, _video_ or _audio_
  */
-export default async function getMediaUrls(
+export default async function getAttachmentUrls(
   message: IMessage,
   envVars: IEnvironmentalVariableRead
 ): Promise<IMediaUrl[]> {

@@ -14,4 +14,9 @@ export interface IYourlsShortenResponse {
   message: string;
   shorturl: string;
   status: "success" | "fail";
+  url?: {
+    keyword: string;
+    url: string;
+    data: string;
+  };
 }

@@ -5,19 +5,53 @@ import {
   IRead,
 } from "@rocket.chat/apps-engine/definition/accessors";
 import { IMessage } from "@rocket.chat/apps-engine/definition/messages";
-import getMediaUrls from "./lib/getMedia";
+import { IShortenResult } from "./definitions/shorten";
+import getAttachmentUrls from "./lib/getMedia";
+import sendMessage from "./lib/sendMessage";
 import getYourlsUrls from "./lib/yourls/shorten";
+
+function createMessage(shortenResult: IShortenResult): string {
+  if (shortenResult.error) {
+    return shortenResult.message;
+  }
+  const message = `
+Name: **${shortenResult.name}**
+URL: **${shortenResult.shortenedUrl}**
+Stats: \`/media-stat ${shortenResult.name}\`
+  `;
+
+  return message;
+}
 
 export default async function postMessageSent(
   message: IMessage,
   read: IRead,
   http: IHttp,
-  persist: IPersistence,
+  _persist: IPersistence,
   modify: IModify
 ): Promise<void> {
-  const mediaUrls = await getMediaUrls(
-    message,
-    read.getEnvironmentReader().getEnvironmentVariables()
-  );
-  await getYourlsUrls(http, mediaUrls);
+  // const mediaUrls = await getAttachmentUrls(
+  //   message,
+  //   read.getEnvironmentReader().getEnvironmentVariables()
+  // );
+
+  // const shortenedResults = await getYourlsUrls(http, mediaUrls);
+
+  const shorts: IShortenResult[] = [
+    { message: "checking", shortenedUrl: "adfas", name: "4312" },
+  ];
+
+  await Promise.all(
+    shorts.map((result) =>
+      sendMessage({
+        creator: modify.getCreator(),
+        room: message.room,
+        msg: createMessage(result),
+        sender: message.sender,
+      })
+    )
+  ).catch((e) => {
+    // TODO: log this error using rocket.chat app
+    console.log(e); // eslint-ignore-line
+  });
 }
