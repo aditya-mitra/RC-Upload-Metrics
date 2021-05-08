@@ -5,23 +5,9 @@ import {
   IRead,
 } from '@rocket.chat/apps-engine/definition/accessors';
 import { IMessage } from '@rocket.chat/apps-engine/definition/messages';
-import { IShortenResult } from './definitions/shorten';
 import getAttachmentUrls from './lib/getAttachment';
-import sendMessage from './lib/sendMessage';
+import sendMessagePostShortened from './lib/sendInChat/sendMessagePostShortened';
 import getYourlsUrls from './lib/yourls/shorten';
-
-function createMessage(shortenResult: IShortenResult): string {
-  if (shortenResult.error) {
-    return `_Error_: **${shortenResult.message}**`;
-  }
-  const message = `
-Name: **${shortenResult.name}**
-URL: **${shortenResult.shortenedUrl}**
-Stats: \`/media-stat ${shortenResult.name}\`
-  `;
-
-  return message;
-}
 
 export default async function postMessageSent(
   message: IMessage,
@@ -38,10 +24,10 @@ export default async function postMessageSent(
   const shortenedResults = await getYourlsUrls(http, mediaUrls);
 
   await Promise.all(
-    shortenedResults.map((result) => sendMessage({
+    shortenedResults.map((result) => sendMessagePostShortened({
       creator: modify.getCreator(),
       room: message.room,
-      msg: createMessage(result),
+      shortenedResult: result,
     })),
   ).catch((e) => {
     // TODO: log this error using rocket.chat app
