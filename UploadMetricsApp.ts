@@ -1,11 +1,25 @@
-import { IConfigurationExtend } from "@rocket.chat/apps-engine/definition/accessors";
+import {
+  IHttp,
+  IModify,
+  IPersistence,
+  IRead,
+} from "@rocket.chat/apps-engine/definition/accessors";
 import { App } from "@rocket.chat/apps-engine/definition/App";
+import {
+  IMessage,
+  IPostMessageSent,
+} from "@rocket.chat/apps-engine/definition/messages";
 
-import StatCommand from "./src/Command";
-export default class UploadMetricsApp extends App {
-  protected async extendConfiguration(
-    config: IConfigurationExtend
+import postMessageSent from './src/postMessageSent'
+export default class UploadMetricsApp extends App implements IPostMessageSent {
+  async executePostMessageSent(
+    message: IMessage,
+    read: IRead,
+    http: IHttp,
+    persist: IPersistence,
+    modify: IModify
   ): Promise<void> {
-    await config.slashCommands.provideSlashCommand(new StatCommand());
+    postMessageSent(message,read,http,persist,modify
+      )
   }
 }
