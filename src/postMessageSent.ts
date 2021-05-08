@@ -12,7 +12,7 @@ import getYourlsUrls from './lib/yourls/shorten';
 
 function createMessage(shortenResult: IShortenResult): string {
   if (shortenResult.error) {
-    return shortenResult.message;
+    return `_Error_: **${shortenResult.message}**`;
   }
   const message = `
 Name: **${shortenResult.name}**

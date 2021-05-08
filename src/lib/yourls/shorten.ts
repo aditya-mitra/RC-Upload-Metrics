@@ -60,12 +60,6 @@ async function getSingleYourlsUrl(
           name: data.url?.keyword,
           message: data.message,
         };
-      } if (data.status === 'fail') {
-        return {
-          shortenedUrl: data.shorturl,
-          name: data.url?.keyword,
-          message: data.message,
-        };
       }
     }
     return handleError(resp.data);
