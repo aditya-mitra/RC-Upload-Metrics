@@ -1,7 +1,7 @@
 import { BlockBuilder } from "@rocket.chat/apps-engine/definition/uikit";
 import { IUIKitModalViewParam } from "@rocket.chat/apps-engine/definition/uikit/UIKitInteractionResponder";
-import { IStatResultSuccess } from "../../definitions/stats";
 
+import { IStatResultSuccess } from "../../definitions/stats";
 import generateRandomUUID from "../../utils/generateUUID";
 
 function generateCodeBlock(text: string | Record<string, unknown>): string {
@@ -11,11 +11,14 @@ ${text}
 \`\`\``;
   }
   return `\`\`\`
-${JSON.stringify("text", null, 4)}
+${JSON.stringify(text, null, 2)}
 \`\`\``;
 }
 
 function showData(key: string, value: string): string {
+  if (value === "") {
+    return `${key} : __unknown__`;
+  }
   return `${key} : **${value}**`;
 }
 
@@ -25,6 +28,8 @@ export default function createStatsModal(
 ): IUIKitModalViewParam {
   const viewID = generateRandomUUID();
 
+  console.log
+
   block.addSectionBlock({
     text: block.newMarkdownTextObject(
       showData("Original URL", stat.originalUrl)
@@ -32,7 +37,7 @@ export default function createStatsModal(
   });
 
   block.addSectionBlock({
-    text: block.newMarkdownTextObject(showData("Name", stat.name)),
+    text: block.newMarkdownTextObject(showData("Title", stat.name)),
   });
 
   block.addSectionBlock({
@@ -42,9 +47,7 @@ export default function createStatsModal(
   block.addDividerBlock();
 
   block.addSectionBlock({
-    text: block.newMarkdownTextObject(
-      showData("Clicks", stat.clicks as string)
-    ),
+    text: block.newMarkdownTextObject(showData("Clicks", stat.clicks + "")),
   });
 
   block.addSectionBlock({
@@ -55,7 +58,7 @@ export default function createStatsModal(
 
   return {
     id: viewID,
-    title: block.newPlainTextObject("Create a new Memo for this room"),
+    title: block.newPlainTextObject("Statistics"),
     blocks: block.getBlocks(),
   };
 }
