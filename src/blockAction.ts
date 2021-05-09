@@ -9,7 +9,7 @@ import {
   UIKitBlockInteractionContext,
 } from "@rocket.chat/apps-engine/definition/uikit";
 
-import { shortenBlockMessage } from "./enums";
+import { shortenBlockMessage } from "./utils/enums";
 import getYourlsStats from "./lib/yourls/stats";
 
 export default async function handleBlockAction(

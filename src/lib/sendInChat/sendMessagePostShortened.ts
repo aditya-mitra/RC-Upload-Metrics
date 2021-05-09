@@ -5,7 +5,7 @@ import {
   IShortenResult,
   IShortenResultSuccess,
 } from '../../definitions/shorten';
-import { shortenBlockMessage } from '../../enums';
+import { shortenBlockMessage } from '../../utils/enums';
 
 interface ISendMessage {
   creator: IModifyCreator;
