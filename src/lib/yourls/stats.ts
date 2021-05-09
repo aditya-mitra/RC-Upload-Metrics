@@ -2,20 +2,20 @@ import {
   HttpStatusCode,
   IHttp,
   IHttpResponse,
-} from '@rocket.chat/apps-engine/definition/accessors';
-import { IStatResult, IStatResultError } from '../../definitions/stats';
+} from "@rocket.chat/apps-engine/definition/accessors";
+import { IStatResult, IStatResultError } from "../../definitions/stats";
 
 import {
   IYourlsStatRequest,
   IYourlsStatResponse,
-} from '../../definitions/yourls';
+} from "../../definitions/yourls";
 
 function handleError(
-  err: IHttpResponse | IHttpResponse['data'],
+  err: IHttpResponse | IHttpResponse["data"]
 ): IStatResultError {
   if (!err || !err.data) {
     return {
-      message: 'Unknown Error!\nPlease check the logs.',
+      message: "Unknown Error!\nPlease check the logs.",
     };
   }
 
@@ -37,17 +37,17 @@ Please check logs.`,
 
 export default async function getYourlsStats(
   http: IHttp,
-  name: string,
+  name: string
 ): Promise<IStatResult> {
   const params: IYourlsStatRequest = {
-    format: 'json',
-    action: 'url-stats',
-    username: 'admin',
-    password: 'yourlspass',
+    format: "json",
+    action: "url-stats",
+    username: "admin",
+    password: "yourlspass",
     shorturl: name,
   };
 
-  const resp = await http.get('http://localhost:7777/yourls-api.php', {
+  const resp = await http.get("http://localhost:7777/yourls-api.php", {
     params,
   } as Record<string, unknown>);
 
@@ -62,7 +62,7 @@ export default async function getYourlsStats(
       return {
         message: data.message,
         originalUrl: data.link.url,
-        additionalInfo: {},
+        additionalInfo: { timestamp: data.link.timestamp },
         clicks: data.link.clicks,
         name: data.link.title,
         shortUrl: data.link.shorturl,

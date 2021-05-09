@@ -22,16 +22,19 @@ export default async function handleBlockAction(
 ): Promise<IUIKitResponse> {
   const { actionId, value, triggerId, user } = ctx.getInteractionData();
 
-  // TODO: remove the `eslint-disable` lines
-
   if (actionId === shortenBlockMessage.stats && value) {
-    const res = await getYourlsStats(http, value);
-    console.log(res); // eslint-disable-line
+    const result = await getYourlsStats(http, value);
+
+    if ("name" in result) {
+      const modal = createStatsModal(
+        modify.getCreator().getBlockBuilder(),
+        result
+      );
+      await modify.getUiController().openModalView(modal, { triggerId }, user);
+    } else {
+      // TODO: send **notify** message for error
+    }
   }
-
-  const modal = createStatsModal(modify.getCreator().getBlockBuilder());
-
-  await modify.getUiController().openModalView(modal, { triggerId }, user);
 
   return { success: true };
 }
