@@ -1,6 +1,6 @@
 export interface IYourlsShortenRequest {
-  format: "json";
-  action: "shorturl";
+  format: 'json';
+  action: 'shorturl';
   url: string;
   username: string;
   password: string;
@@ -13,7 +13,7 @@ export interface IYourlsShortenResponse {
   errorCode?: number;
   message: string;
   shorturl: string;
-  status: "success" | "fail";
+  status: 'success' | 'fail';
   url?: {
     keyword: string;
     url: string;
@@ -22,8 +22,8 @@ export interface IYourlsShortenResponse {
 }
 
 export interface IYourlsStatRequest {
-  format: "json";
-  action: "url-stats";
+  format: 'json';
+  action: 'url-stats';
   shorturl: string;
   username: string;
   password: string;
