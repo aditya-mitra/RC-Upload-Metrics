@@ -9,6 +9,8 @@ import {
   UIKitBlockInteractionContext,
 } from '@rocket.chat/apps-engine/definition/uikit';
 
+import { shortenBlockMessage } from './enums';
+
 export default async function handleBlockAction(
   ctx: UIKitBlockInteractionContext,
   read: IRead,
@@ -16,9 +18,11 @@ export default async function handleBlockAction(
   persist: IPersistence,
   modify: IModify,
 ): Promise<IUIKitResponse> {
-  const { actionId } = ctx.getInteractionData();
+  const { actionId, value } = ctx.getInteractionData();
 
-  console.log(actionId, 'action id');
+  if (actionId === shortenBlockMessage.stats && value) {
+    console.log('the value was ', value);
+  }
 
   return { success: true };
 }
