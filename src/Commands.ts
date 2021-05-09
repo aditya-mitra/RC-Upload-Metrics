@@ -8,6 +8,7 @@ import {
   SlashCommandContext,
 } from "@rocket.chat/apps-engine/definition/slashcommands";
 import createStatsModal from "./lib/modals/createStatsModal";
+import sendNotifyMessage from "./lib/sendInChat/sendNotifyMessage";
 import getYourlsStats from "./lib/yourls/stats";
 
 export default class StatCommand implements ISlashCommand {
@@ -45,7 +46,12 @@ export default class StatCommand implements ISlashCommand {
           ctx.getSender()
         );
     } else {
-      // TODO: send **notify** message for error
+      await sendNotifyMessage({
+        notify: modify.getNotifier(),
+        sender: ctx.getSender(),
+        room: ctx.getRoom(),
+        msg: result.message,
+      });
     }
   }
 }
