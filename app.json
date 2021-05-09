@@ -12,5 +12,7 @@
     "nameSlug": "upload-metrics",
     "classFile": "UploadMetricsApp.ts",
     "description": "Rocket.Chat App to get the metrics (using a provider) for Attachments",
-    "implements": []
+    "implements": [
+        "IPostMessageSent"
+    ]
 }
