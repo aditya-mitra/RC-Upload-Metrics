@@ -1,4 +1,5 @@
 import {
+  IConfigurationExtend,
   IHttp,
   IModify,
   IPersistence,
@@ -17,6 +18,7 @@ import {
 
 import postMessageSent from './src/postMessageSent';
 import handleBlockAction from './src/blockAction';
+import StatsCommand from './src/Commands';
 
 export default class UploadMetricsApp
   extends App
@@ -39,5 +41,11 @@ export default class UploadMetricsApp
     modify: IModify,
   ): Promise<IUIKitResponse> {
     return handleBlockAction(ctx, read, http, persist, modify);
+  }
+
+  protected async extendConfiguration(
+    config: IConfigurationExtend,
+  ): Promise<void> {
+    await config.slashCommands.provideSlashCommand(new StatsCommand());
   }
 }

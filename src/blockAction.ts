@@ -12,6 +12,7 @@ import {
 import { shortenBlockMessage } from './utils/enums';
 import getYourlsStats from './lib/yourls/stats';
 import createStatsModal from './lib/modals/createStatsModal';
+import sendNotifyMessage from './lib/sendInChat/sendNotifyMessage';
 
 export default async function handleBlockAction(
   ctx: UIKitBlockInteractionContext,
@@ -21,10 +22,10 @@ export default async function handleBlockAction(
   modify: IModify,
 ): Promise<IUIKitResponse> {
   const {
-    actionId, value, triggerId, user,
+    actionId, value, triggerId, user, room,
   } = ctx.getInteractionData();
 
-  if (actionId === shortenBlockMessage.stats && value) {
+  if (actionId === shortenBlockMessage.stats && value && room) {
     const result = await getYourlsStats(http, value);
 
     if ('name' in result) {
@@ -34,7 +35,12 @@ export default async function handleBlockAction(
       );
       await modify.getUiController().openModalView(modal, { triggerId }, user);
     } else {
-      // TODO: send **notify** message for error
+      sendNotifyMessage({
+        notify: modify.getNotifier(),
+        sender: user,
+        msg: result.message,
+        room,
+      });
     }
   }
 
