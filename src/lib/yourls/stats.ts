@@ -62,7 +62,7 @@ export default async function getYourlsStats(
       return {
         message: data.message,
         originalUrl: data.link.url,
-        additionalInfo: {},
+        additionalInfo: { timestamp: data.link.timestamp },
         clicks: data.link.clicks,
         name: data.link.title,
         shortUrl: data.link.shorturl,

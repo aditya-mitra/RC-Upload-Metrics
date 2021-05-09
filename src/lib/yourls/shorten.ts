@@ -30,7 +30,7 @@ async function getSingleYourlsUrl(
 ): Promise<IShortenResult> {
   const args = attachment.command.split(/\s+/g);
   const keyword = args[1] ?? '';
-  const title = args[2] ?? `<${attachment.type}>`;
+  const title = args[2] ? args.slice(2).join(' ') : '';
 
   // TODO: try again for `http.post`
   //  `http.post` is giving 403 error in **xml format**
