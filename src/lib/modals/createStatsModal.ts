@@ -3,7 +3,7 @@ import { IUIKitModalViewParam } from "@rocket.chat/apps-engine/definition/uikit/
 
 import generateRandomUUID from "../../utils/generateUUID";
 
-export default function displayStatsModal(
+export default function createStatsModal(
   block: BlockBuilder
 ): IUIKitModalViewParam {
   const viewID = generateRandomUUID();

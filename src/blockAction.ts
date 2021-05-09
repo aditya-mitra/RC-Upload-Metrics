@@ -11,7 +11,7 @@ import {
 
 import { shortenBlockMessage } from "./utils/enums";
 import getYourlsStats from "./lib/yourls/stats";
-import displayStatsModal from "./lib/modals/displayStatsModal";
+import createStatsModal from "./lib/modals/createStatsModal";
 
 export default async function handleBlockAction(
   ctx: UIKitBlockInteractionContext,
@@ -29,7 +29,7 @@ export default async function handleBlockAction(
     console.log(res); // eslint-disable-line
   }
 
-  const modal = displayStatsModal(modify.getCreator().getBlockBuilder());
+  const modal = createStatsModal(modify.getCreator().getBlockBuilder());
 
   await modify.getUiController().openModalView(modal, { triggerId }, user);
 
