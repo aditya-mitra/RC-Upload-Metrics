@@ -20,3 +20,23 @@ export interface IYourlsShortenResponse {
     data: string;
   };
 }
+
+export interface IYourlsStatRequest {
+  format: 'json';
+  action: 'url-stats';
+  shorturl: string;
+  username: string;
+  password: string;
+}
+
+export interface IYourlsStatResponse {
+  statusCode: number;
+  message: string;
+  link?: {
+    shorturl: string;
+    title: string;
+    timestamp: string;
+    clicks: string;
+    url: string;
+  };
+}

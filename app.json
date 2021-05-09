@@ -13,6 +13,7 @@
     "classFile": "UploadMetricsApp.ts",
     "description": "Rocket.Chat App to get the metrics (using a provider) for Attachments",
     "implements": [
-        "IPostMessageSent"
+        "IPostMessageSent",
+        "IUIKitInteractionHandler"
     ]
 }
