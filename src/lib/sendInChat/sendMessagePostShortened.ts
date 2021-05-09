@@ -16,7 +16,7 @@ interface ISendMessage {
 function addText(block: BlockBuilder, shortenedResult: IShortenResult) {
   const text = 'name' in shortenedResult
     ? `
-Name: **${shortenedResult.name}**
+Id: **${shortenedResult.name}**
 URL: **${shortenedResult.shortenedUrl}**
 Original URL: **${shortenedResult.originalUrl}**
 Stats: \`/media-stat ${shortenedResult.name}\`
