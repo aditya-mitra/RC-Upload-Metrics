@@ -21,7 +21,7 @@ URL: **${shortenedResult.shortenedUrl}**
 Original URL: **${shortenedResult.originalUrl}**
 Stats: \`/media-stat ${shortenedResult.name}\`
   `
-    : `_Error_: **${shortenedResult.message}**`;
+    : `_Error_ : **${shortenedResult.message}**`;
 
   block.addContextBlock({
     elements: [block.newMarkdownTextObject(text)],
