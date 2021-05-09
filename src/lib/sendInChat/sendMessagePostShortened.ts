@@ -1,7 +1,10 @@
 import { IModifyCreator } from '@rocket.chat/apps-engine/definition/accessors';
 import { IRoom } from '@rocket.chat/apps-engine/definition/rooms';
 import { BlockBuilder } from '@rocket.chat/apps-engine/definition/uikit';
-import { IShortenResult } from '../../definitions/shorten';
+import {
+  IShortenResult,
+  IShortenResultSuccess,
+} from '../../definitions/shorten';
 import { shortenBlockMessage } from '../../enums';
 
 interface ISendMessage {
@@ -11,20 +14,24 @@ interface ISendMessage {
 }
 
 function addText(block: BlockBuilder, shortenedResult: IShortenResult) {
-  const text = shortenedResult.error
-    ? `_Error_: **${shortenedResult.message}**`
-    : `
+  const text = 'name' in shortenedResult
+    ? `
 Name: **${shortenedResult.name}**
 URL: **${shortenedResult.shortenedUrl}**
+Original URL: **${shortenedResult.originalUrl}**
 Stats: \`/media-stat ${shortenedResult.name}\`
-  `;
+  `
+    : `_Error_: **${shortenedResult.message}**`;
 
   block.addContextBlock({
     elements: [block.newMarkdownTextObject(text)],
   });
 }
 
-function addButtons(block: BlockBuilder, shortenedResult: IShortenResult) {
+function addButtons(
+  block: BlockBuilder,
+  shortenedResult: IShortenResultSuccess,
+) {
   block.addActionsBlock({
     elements: [
       block.newButtonElement({
@@ -45,7 +52,10 @@ export default async function sendMessageAfterShortenedUrl({
 
   const block = creator.getBlockBuilder();
   addText(block, shortenedResult);
-  addButtons(block, shortenedResult);
+
+  if ('name' in shortenedResult) {
+    addButtons(block, shortenedResult);
+  }
 
   builder.setBlocks(block);
 

@@ -9,19 +9,17 @@ import {
   IYourlsShortenResponse,
 } from '../../definitions/yourls';
 import { IMediaUrl } from '../../definitions/attachment';
-import { IShortenResult } from '../../definitions/shorten';
+import { IShortenResultError, IShortenResult } from '../../definitions/shorten';
 
-function handleError(data: IHttpResponse['data']): IShortenResult {
+function handleError(data: IHttpResponse['data']): IShortenResultError {
   const unknownError = 'Unknown Error!\nPlease check the logs.';
   if (!data) {
     return {
-      error: true,
       message: unknownError,
     };
   }
 
   return {
-    error: true,
     message: data.message || unknownError,
   };
 }
@@ -57,7 +55,8 @@ async function getSingleYourlsUrl(
       if (data.status === 'success') {
         return {
           shortenedUrl: data.shorturl,
-          name: data.url?.keyword,
+          name: data.url?.keyword || '',
+          originalUrl: data.url?.url || '',
           message: data.message,
         };
       }
