@@ -30,7 +30,9 @@ async function getSingleYourlsUrl(
 ): Promise<IShortenResult> {
   const args = attachment.command.split(/\s+/g);
   const keyword = args[1] ?? '';
-  const title = args[2] ? args.slice(2).join(' ') : '';
+  const title = args[2] ? args.slice(2).join(' ') : `<${attachment.type}>`;
+
+  console.log(title,'was the title')
 
   // TODO: try again for `http.post`
   //  `http.post` is giving 403 error in **xml format**
@@ -39,6 +41,7 @@ async function getSingleYourlsUrl(
     format: 'json',
     action: 'shorturl',
     url: attachment.url,
+    // TODO: convert username and password into settings
     username: 'admin',
     password: 'yourlspass',
     keyword,

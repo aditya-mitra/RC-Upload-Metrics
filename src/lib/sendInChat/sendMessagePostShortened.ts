@@ -36,7 +36,7 @@ function addButtons(
     elements: [
       block.newButtonElement({
         text: block.newPlainTextObject('Get Stats'),
-        actionId: shortenBlockMessage.stats,
+        actionId: shortenBlockMessage.single_stat,
         value: shortenedResult.name,
       }),
     ],
