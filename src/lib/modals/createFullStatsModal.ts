@@ -34,7 +34,7 @@ export default function createFullStatsModal(
 
   result.links.forEach((link) => {
     block.addContextBlock({
-      elements: [block.newMarkdownTextObject(generateCodeBlock(link))],
+      elements: [block.newMarkdownTextObject(generateCodeBlock(link, true))],
     });
   });
 

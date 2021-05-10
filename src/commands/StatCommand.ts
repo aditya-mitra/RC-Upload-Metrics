@@ -17,9 +17,6 @@ export default class StatCommand implements ISlashCommand {
 
   public i18nDescription = 'get stats of an uploaded media';
 
-  // TODO: add more multiple slash commands
-  // like new, configure, and metric
-  // area: decide
   public i18nParamsExample = 'name-of-the-stat OR short-url';
 
   public providesPreview = false;
