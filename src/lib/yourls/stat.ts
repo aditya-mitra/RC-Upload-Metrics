@@ -35,7 +35,7 @@ Please check logs.`,
   };
 }
 
-export default async function getYourlsStats(
+export default async function getSingleYourlsStat(
   http: IHttp,
   name: string,
 ): Promise<IStatResult> {

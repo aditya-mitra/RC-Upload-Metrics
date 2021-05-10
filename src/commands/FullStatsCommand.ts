@@ -7,19 +7,17 @@ import {
   ISlashCommand,
   SlashCommandContext,
 } from '@rocket.chat/apps-engine/definition/slashcommands';
-import createStatsModal from './lib/modals/createStatsModal';
-import sendNotifyMessage from './lib/sendInChat/sendNotifyMessage';
-import getYourlsStats from './lib/yourls/stats';
+import createFullStatsModal from '../lib/modals/createFullStatsModal';
+import sendNotifyMessage from '../lib/sendInChat/sendNotifyMessage';
 
-export default class StatCommand implements ISlashCommand {
-  public command = 'media-stat';
+import getYourlsFullStats from '../lib/yourls/fullStats';
 
-  public i18nDescription = 'get stats of an uploaded media';
+export default class FullStatsCommand implements ISlashCommand {
+  public command = 'media-stat-full';
 
-  // TODO: add more multiple slash commands
-  // like new, configure, and metric
-  // area: decide
-  public i18nParamsExample = 'name-of-the-stat OR short-url';
+  public i18nDescription = 'get full stats';
+
+  public i18nParamsExample = '';
 
   public providesPreview = false;
 
@@ -29,15 +27,13 @@ export default class StatCommand implements ISlashCommand {
     modify: IModify,
     http: IHttp,
   ): Promise<void> {
-    const url = ctx.getArguments()[0];
-
-    const result = await getYourlsStats(http, url);
-
-    if ('name' in result) {
-      const modal = createStatsModal(
+    const result = await getYourlsFullStats({ http, limit: 10 });
+    if ('links' in result) {
+      const modal = createFullStatsModal(
         modify.getCreator().getBlockBuilder(),
         result,
       );
+
       await modify
         .getUiController()
         .openModalView(
@@ -46,11 +42,11 @@ export default class StatCommand implements ISlashCommand {
           ctx.getSender(),
         );
     } else {
-      await sendNotifyMessage({
+      sendNotifyMessage({
         notify: modify.getNotifier(),
         sender: ctx.getSender(),
-        room: ctx.getRoom(),
         msg: result.message,
+        room: ctx.getRoom(),
       });
     }
   }

@@ -10,8 +10,8 @@ import {
 } from '@rocket.chat/apps-engine/definition/uikit';
 
 import { shortenBlockMessage } from './utils/enums';
-import getYourlsStats from './lib/yourls/stats';
-import createStatsModal from './lib/modals/createStatsModal';
+import getYourlsSingleStat from './lib/yourls/stat';
+import createSingleStatModal from './lib/modals/createStatModal';
 import sendNotifyMessage from './lib/sendInChat/sendNotifyMessage';
 
 export default async function handleBlockAction(
@@ -25,11 +25,11 @@ export default async function handleBlockAction(
     actionId, value, triggerId, user, room,
   } = ctx.getInteractionData();
 
-  if (actionId === shortenBlockMessage.stats && value && room) {
-    const result = await getYourlsStats(http, value);
+  if (actionId === shortenBlockMessage.singleStat && value && room) {
+    const result = await getYourlsSingleStat(http, value);
 
     if ('name' in result) {
-      const modal = createStatsModal(
+      const modal = createSingleStatModal(
         modify.getCreator().getBlockBuilder(),
         result,
       );

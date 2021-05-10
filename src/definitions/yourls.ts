@@ -29,14 +29,36 @@ export interface IYourlsStatRequest {
   password: string;
 }
 
+interface IYourlLinkDetail {
+  shorturl: string;
+  title: string;
+  timestamp: string;
+  clicks: string;
+  url: string;
+  [key: string]: unknown;
+}
+
 export interface IYourlsStatResponse {
   statusCode: number;
   message: string;
-  link?: {
-    shorturl: string;
-    title: string;
-    timestamp: string;
-    clicks: string;
-    url: string;
+  link?: IYourlLinkDetail;
+}
+
+export interface IYourlsFullStatsRequest {
+  format: 'json';
+  action: 'stats';
+  username: string;
+  password: string;
+  filter: 'top' | 'bottom' | 'random';
+  limit: number;
+}
+
+export interface IYourlsFullStatsResponse {
+  stats: {
+    total_links: string; // eslint-disable-line camelcase
+    total_clicks: string; // eslint-disable-line camelcase
   };
+  statusCode: number;
+  message: string;
+  links: Record<string, IYourlLinkDetail>;
 }

@@ -11,16 +11,27 @@ import {
 import { IMediaUrl } from '../../definitions/attachment';
 import { IShortenResultError, IShortenResult } from '../../definitions/shorten';
 
-function handleError(data: IHttpResponse['data']): IShortenResultError {
-  const unknownError = 'Unknown Error!\nPlease check the logs.';
-  if (!data) {
+function handleError(
+  err: IHttpResponse | IHttpResponse['data'],
+): IShortenResultError {
+  if (!err || !err.data) {
     return {
-      message: unknownError,
+      message: 'Unknown Error!\nPlease check the logs.',
+    };
+  }
+
+  if (!err.data.message && err.statusCode) {
+    // eslint-disable-next-line
+    console.log(err); // would be beneficial to log this error
+    return {
+      message: `
+StatusCode: **${err.statusCode}**
+Please check logs.`,
     };
   }
 
   return {
-    message: data.message || unknownError,
+    message: err.data.message,
   };
 }
 
@@ -30,7 +41,7 @@ async function getSingleYourlsUrl(
 ): Promise<IShortenResult> {
   const args = attachment.command.split(/\s+/g);
   const keyword = args[1] ?? '';
-  const title = args[2] ? args.slice(2).join(' ') : '';
+  const title = args[2] ? args.slice(2).join(' ') : `<${attachment.type}>`;
 
   // TODO: try again for `http.post`
   //  `http.post` is giving 403 error in **xml format**
@@ -38,6 +49,7 @@ async function getSingleYourlsUrl(
   const params: IYourlsShortenRequest = {
     format: 'json',
     action: 'shorturl',
+    // TODO: convert url, username and password into settings
     url: attachment.url,
     username: 'admin',
     password: 'yourlspass',
@@ -61,7 +73,7 @@ async function getSingleYourlsUrl(
         };
       }
     }
-    return handleError(resp.data);
+    return handleError(resp);
   } catch (e) {
     return handleError(e);
   }

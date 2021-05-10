@@ -18,7 +18,8 @@ import {
 
 import postMessageSent from './src/postMessageSent';
 import handleBlockAction from './src/blockAction';
-import StatsCommand from './src/Commands';
+import StatCommand from './src/commands/StatCommand';
+import FullStatsCommand from './src/commands/FullStatsCommand';
 
 export default class UploadMetricsApp
   extends App
@@ -30,7 +31,7 @@ export default class UploadMetricsApp
     persist: IPersistence,
     modify: IModify,
   ): Promise<void> {
-    postMessageSent(message, read, http, persist, modify);
+    return postMessageSent(message, read, http, persist, modify);
   }
 
   async executeBlockActionHandler(
@@ -46,6 +47,9 @@ export default class UploadMetricsApp
   protected async extendConfiguration(
     config: IConfigurationExtend,
   ): Promise<void> {
-    await config.slashCommands.provideSlashCommand(new StatsCommand());
+    await Promise.all([
+      config.slashCommands.provideSlashCommand(new StatCommand()),
+      config.slashCommands.provideSlashCommand(new FullStatsCommand()),
+    ]);
   }
 }
