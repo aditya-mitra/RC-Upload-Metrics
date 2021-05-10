@@ -11,16 +11,27 @@ import {
 import { IMediaUrl } from '../../definitions/attachment';
 import { IShortenResultError, IShortenResult } from '../../definitions/shorten';
 
-function handleError(data: IHttpResponse['data']): IShortenResultError {
-  const unknownError = 'Unknown Error!\nPlease check the logs.';
-  if (!data) {
+
+function handleError(
+  err: IHttpResponse | IHttpResponse['data'],
+): IShortenResultError {
+  if (!err || !err.data) {
     return {
-      message: unknownError,
+      message: 'Unknown Error!\nPlease check the logs.',
+    };
+  }
+
+  if (!err.data.message && err.statusCode) {
+    console.log(err); // would be beneficial to log this error
+    return {
+      message: `
+StatusCode: **${err.statusCode}**
+Please check logs.`,
     };
   }
 
   return {
-    message: data.message || unknownError,
+    message: err.data.message,
   };
 }
 
@@ -64,7 +75,7 @@ async function getSingleYourlsUrl(
         };
       }
     }
-    return handleError(resp.data);
+    return handleError(resp);
   } catch (e) {
     return handleError(e);
   }
