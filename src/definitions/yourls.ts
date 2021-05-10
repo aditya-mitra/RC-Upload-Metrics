@@ -35,6 +35,7 @@ interface IYourlLinkDetail {
   timestamp: string;
   clicks: string;
   url: string;
+  [key: string]: unknown;
 }
 
 export interface IYourlsStatResponse {

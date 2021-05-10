@@ -22,8 +22,7 @@ function getLinkDetails(
   links: IYourlsFullStatsResponse['links'],
 ): Record<string, unknown>[] {
   if (links) {
-    // TODO: refactor later `any` type
-    return Object.values(links) as any; // eslint-disable-line
+    return Object.values(links);
   }
   return [];
 }
