@@ -30,7 +30,7 @@ export default class UploadMetricsApp
     persist: IPersistence,
     modify: IModify,
   ): Promise<void> {
-    postMessageSent(message, read, http, persist, modify);
+    return postMessageSent(message, read, http, persist, modify);
   }
 
   async executeBlockActionHandler(
