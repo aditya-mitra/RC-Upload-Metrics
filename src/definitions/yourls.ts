@@ -1,6 +1,6 @@
 export interface IYourlsShortenRequest {
-  format: "json";
-  action: "shorturl";
+  format: 'json';
+  action: 'shorturl';
   url: string;
   username: string;
   password: string;
@@ -13,7 +13,7 @@ export interface IYourlsShortenResponse {
   errorCode?: number;
   message: string;
   shorturl: string;
-  status: "success" | "fail";
+  status: 'success' | 'fail';
   url?: {
     keyword: string;
     url: string;
@@ -22,8 +22,8 @@ export interface IYourlsShortenResponse {
 }
 
 export interface IYourlsStatRequest {
-  format: "json";
-  action: "url-stats";
+  format: 'json';
+  action: 'url-stats';
   shorturl: string;
   username: string;
   password: string;
@@ -44,18 +44,18 @@ export interface IYourlsStatResponse {
 }
 
 export interface IYourlsFullStatsRequest {
-  format: "json";
-  action: "stats";
+  format: 'json';
+  action: 'stats';
   username: string;
   password: string;
-  filter: "top" | "bottom" | "random";
+  filter: 'top' | 'bottom' | 'random';
   limit: number;
 }
 
 export interface IYourlsFullStatsResponse {
   stats: {
-    total_links: string;
-    total_clicks: string;
+    total_links: string; // eslint-disable-line camelcase
+    total_clicks: string; // eslint-disable-line camelcase
   };
   statusCode: number;
   message: string;

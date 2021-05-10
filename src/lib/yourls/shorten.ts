@@ -12,7 +12,7 @@ import { IMediaUrl } from '../../definitions/attachment';
 import { IShortenResultError, IShortenResult } from '../../definitions/shorten';
 
 function handleError(
-  err: Record<string,any>,
+  err: IHttpResponse | IHttpResponse['data'],
 ): IShortenResultError {
   if (!err || !err.data) {
     return {
@@ -21,6 +21,7 @@ function handleError(
   }
 
   if (!err.data.message && err.statusCode) {
+    // eslint-disable-next-line
     console.log(err); // would be beneficial to log this error
     return {
       message: `
@@ -41,8 +42,6 @@ async function getSingleYourlsUrl(
   const args = attachment.command.split(/\s+/g);
   const keyword = args[1] ?? '';
   const title = args[2] ? args.slice(2).join(' ') : `<${attachment.type}>`;
-
-  console.log(title, 'was the title');
 
   // TODO: try again for `http.post`
   //  `http.post` is giving 403 error in **xml format**

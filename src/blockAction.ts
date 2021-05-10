@@ -25,7 +25,7 @@ export default async function handleBlockAction(
     actionId, value, triggerId, user, room,
   } = ctx.getInteractionData();
 
-  if (actionId === shortenBlockMessage.single_stat && value && room) {
+  if (actionId === shortenBlockMessage.singleStat && value && room) {
     const result = await getYourlsSingleStat(http, value);
 
     if ('name' in result) {

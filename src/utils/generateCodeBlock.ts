@@ -1,14 +1,15 @@
 /**
  * put a string or object inside code block markdown
  * @param text the string or object to be in code blocks
- * @param removeStartEnd whether to remove the curly braces at the starting and ending if it an object
+ * @param removeStartEnd
+ * whether to remove the curly braces at the starting and ending if it an object
  * @returns code blocked markdown string
  */
 export default function generateCodeBlock(
   text: string | Record<string, unknown>,
-  removeStartEnd = false
+  removeStartEnd = false,
 ): string {
-  if (typeof text === "string") {
+  if (typeof text === 'string') {
     return `\`\`\`
   ${text}
   \`\`\``;
