@@ -3,17 +3,7 @@ import { IUIKitModalViewParam } from '@rocket.chat/apps-engine/definition/uikit/
 
 import { IStatResultSuccess } from '../../definitions/stats';
 import generateRandomUUID from '../../utils/generateUUID';
-
-function generateCodeBlock(text: string | Record<string, unknown>): string {
-  if (typeof text === 'string') {
-    return `\`\`\`
-${text}
-\`\`\``;
-  }
-  return `\`\`\`
-${JSON.stringify(text, null, 2)}
-\`\`\``;
-}
+import generateCodeBlock from '../../utils/generateCodeBlock'
 
 function showData(key: string, value: string): string {
   if (value === '') {
