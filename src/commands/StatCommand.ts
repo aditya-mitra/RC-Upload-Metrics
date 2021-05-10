@@ -7,9 +7,10 @@ import {
   ISlashCommand,
   SlashCommandContext,
 } from '@rocket.chat/apps-engine/definition/slashcommands';
-import createSingleStatModal from './lib/modals/createStatModal';
-import sendNotifyMessage from './lib/sendInChat/sendNotifyMessage';
-import getYourlsSingleStat from './lib/yourls/stat';
+
+import createSingleStatModal from '../lib/modals/createStatModal';
+import sendNotifyMessage from '../lib/sendInChat/sendNotifyMessage';
+import getYourlsSingleStat from '../lib/yourls/stat';
 
 export default class StatCommand implements ISlashCommand {
   public command = 'media-stat';
@@ -55,3 +56,4 @@ export default class StatCommand implements ISlashCommand {
     }
   }
 }
+

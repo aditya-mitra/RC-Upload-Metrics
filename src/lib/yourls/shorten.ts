@@ -40,8 +40,8 @@ async function getSingleYourlsUrl(
   const params: IYourlsShortenRequest = {
     format: 'json',
     action: 'shorturl',
+    // TODO: convert url, username and password into settings
     url: attachment.url,
-    // TODO: convert username and password into settings
     username: 'admin',
     password: 'yourlspass',
     keyword,
