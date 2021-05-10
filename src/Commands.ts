@@ -7,9 +7,9 @@ import {
   ISlashCommand,
   SlashCommandContext,
 } from '@rocket.chat/apps-engine/definition/slashcommands';
-import createStatsModal from './lib/modals/createStatsModal';
+import createSingleStatModal from './lib/modals/createStatModal';
 import sendNotifyMessage from './lib/sendInChat/sendNotifyMessage';
-import getYourlsStats from './lib/yourls/stats';
+import getYourlsSingleStat from './lib/yourls/stat';
 
 export default class StatCommand implements ISlashCommand {
   public command = 'media-stat';
@@ -31,10 +31,10 @@ export default class StatCommand implements ISlashCommand {
   ): Promise<void> {
     const url = ctx.getArguments()[0];
 
-    const result = await getYourlsStats(http, url);
+    const result = await getYourlsSingleStat(http, url);
 
     if ('name' in result) {
-      const modal = createStatsModal(
+      const modal = createSingleStatModal(
         modify.getCreator().getBlockBuilder(),
         result,
       );

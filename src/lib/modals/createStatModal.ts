@@ -22,7 +22,7 @@ function showData(key: string, value: string): string {
   return `${key} : **${value}**`;
 }
 
-export default function createStatsModal(
+export default function createSingleStatModal(
   block: BlockBuilder,
   stat: IStatResultSuccess,
 ): IUIKitModalViewParam {

@@ -5,5 +5,5 @@ export enum MediaUrlType {
 }
 
 export enum shortenBlockMessage {
-  stats = 'get_stats',
+  single_stat = 'get_single_stat',
 }

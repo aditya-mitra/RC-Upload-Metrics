@@ -18,7 +18,7 @@ import {
 
 import postMessageSent from './src/postMessageSent';
 import handleBlockAction from './src/blockAction';
-import StatsCommand from './src/Commands';
+import StatCommand from './src/Commands';
 
 export default class UploadMetricsApp
   extends App
@@ -46,6 +46,6 @@ export default class UploadMetricsApp
   protected async extendConfiguration(
     config: IConfigurationExtend,
   ): Promise<void> {
-    await config.slashCommands.provideSlashCommand(new StatsCommand());
+    await config.slashCommands.provideSlashCommand(new StatCommand());
   }
 }
