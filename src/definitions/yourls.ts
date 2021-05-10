@@ -59,5 +59,5 @@ export interface IYourlsFullStatsResponse {
   };
   statusCode: number;
   message: string;
-  links: Record<string, IYourlLinkDetail>[];
+  links: Record<string, IYourlLinkDetail>;
 }

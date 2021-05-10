@@ -7,6 +7,7 @@ import {
   ISlashCommand,
   SlashCommandContext,
 } from "@rocket.chat/apps-engine/definition/slashcommands";
+import sendNotifyMessage from "../lib/sendInChat/sendNotifyMessage";
 
 import getYourlsFullStats from "../lib/yourls/fullStats";
 
@@ -25,6 +26,16 @@ export default class FullStatsCommand implements ISlashCommand {
     modify: IModify,
     http: IHttp
   ): Promise<void> {
-    await getYourlsFullStats({ http, limit: 10 });
+    const result = await getYourlsFullStats({ http, limit: 10 });
+    if ("links" in result) {
+      console.log(result.links);
+    }
+
+    sendNotifyMessage({
+      notify: modify.getNotifier(),
+      sender: ctx.getSender(),
+      msg: result.message,
+      room: ctx.getRoom(),
+    });
   }
 }

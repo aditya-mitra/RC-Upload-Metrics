@@ -11,9 +11,8 @@ import {
 import { IMediaUrl } from '../../definitions/attachment';
 import { IShortenResultError, IShortenResult } from '../../definitions/shorten';
 
-
 function handleError(
-  err: IHttpResponse | IHttpResponse['data'],
+  err: Record<string,any>,
 ): IShortenResultError {
   if (!err || !err.data) {
     return {
@@ -43,7 +42,7 @@ async function getSingleYourlsUrl(
   const keyword = args[1] ?? '';
   const title = args[2] ? args.slice(2).join(' ') : `<${attachment.type}>`;
 
-  console.log(title,'was the title')
+  console.log(title, 'was the title');
 
   // TODO: try again for `http.post`
   //  `http.post` is giving 403 error in **xml format**
